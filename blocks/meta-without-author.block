@@ -1,0 +1,43 @@
+{.section categories}
+  <ul class="category-list boldSansSerif">
+    {.repeated section @}
+      <li>
+        <a href="/blog/?category={@|url-encode}">{@}</a>
+      </li>
+    {.end}
+  </ul>
+{.end}
+{.section tags}
+  <ul class="tags-list boldSansSerif">
+    {.repeated section @}
+      <li>
+        <a href="/blog/?tag={@|url-encode}">{@}</a>
+      </li>
+    {.end}
+  </ul>
+{.end}
+<div class="social-links">
+  <div class="social-links__title">Share this article</div>
+  <ul class="social-links__icons">
+    <li>
+      <a
+        href="https://twitter.com/share?url={website.baseUrl}{fullUrl}&via=redbadgerteam&text={title}"
+        title="Share this article on Twitter"
+        class="social-links__icon"
+        target="_blank"
+      >
+        <img src="/assets/twitter_share.svg" title="Twitter" alt="Twitter">
+      </a>
+    </li>
+    <li>
+      <a
+        href="https://www.facebook.com/sharer.php?u={website.baseUrl}{fullUrl}"
+        title="Share this article on Facebook"
+        class="social-links__icon"
+        target="_blank"
+      >
+        <img src="/assets/facebook_share.svg" title="Facebook" alt="Facebook">
+      </a>
+    </li>
+  </ul>
+</div>

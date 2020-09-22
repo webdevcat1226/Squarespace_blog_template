@@ -1,0 +1,59 @@
+{.section item}
+<div class="blog-article">
+  <div class="blog-article__details">
+    {.section author}
+    <a class="blog-article__author-name fontXS sansSerif" href="/blog{collection.fullUrl}?author={author.id}">{displayName}</a>
+    {.end}
+
+    <time class="blog-article__time fontXS sansSerif" datetime="{addedOn|date %F}" pubdate>
+      {addedOn|timesince}
+    </time>
+  </div>
+
+  <h1 class="blog-article__title fontL boldSerif" data-content-field="title">
+    {title}
+  </h1>
+
+  {.main-image?}
+  <img class="blog-article__main-image" alt="" role="presentation" src="{assetUrl}?w=1000w">
+  {.or}
+  {.end}
+
+  <div class="body-author__container">
+    <div class="blog-article__container">
+      <div class="blog-article__body serif">
+        {.section body}{@}{.end}
+      </div>
+      <div class="meta-block--repeated">
+        {@|apply meta-without-author.block}
+      </div>
+    </div>
+    <div class="meta-block">
+      {.section author}
+        <div class="author">
+          <div class="author__name boldSansSerif">
+            <span>{author.firstName}</span>
+            <span>{author.lastName}</span>
+          </div>
+          <div class="author__bio sansSerif">
+            {author.bio}
+          </div>
+          <a href="/blog/?author={author.id}" class="boldSansSerif author__profile">
+            <span>
+              More from {author.firstName}
+            </span>
+            <img class="arrow" role="presentation" alt="" src="/assets/arrow.svg" />
+          </a>
+        </div>
+      {.end}
+      {@|apply meta-without-author.block}
+    </div>
+  </div>
+
+</div>
+<script>
+  ampTracking.blogTitle = {title|json};
+  ampTracking.blogAuthor = {author.displayName|json};
+  ampTracking.blogCategories = {categories|json};
+</script>
+{.end}

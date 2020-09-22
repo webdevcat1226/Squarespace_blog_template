@@ -1,0 +1,38 @@
+version: 2
+jobs:
+  # This job is just a placeholder as the repo does not have tests and does not need
+  # to compile any code
+  build:
+    docker:
+      - image: redbadger/blog-squarespace-template:1
+    
+    steps:    
+      - run:
+          name: Nothing to do
+          command: echo "Yay?"
+
+  deploy_production:            
+    docker:
+      - image: redbadger/blog-squarespace-template:1
+
+    steps:
+      - checkout
+
+      - run:
+          name: Add squarespace as remote
+          command: git remote add squarespace https://$SQ_USERNAME:$SQ_PASSWORD@redbadger-blog.squarespace.com/template.git
+
+      - run:
+          name: Push to squarespace
+          command: git push squarespace master 
+
+      - run:
+          name: Install node-fetch
+          command: npm install node-fetch
+
+      - run:
+          name: Register github release
+          command: ./bin/register-github-release.js live
+
+                    
+

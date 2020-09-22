@@ -1,0 +1,156 @@
+<div class="row sqs-row">
+  <div class="col sqs-col-12 span-12">
+    <div class="sqs-block search-block sqs-block-search
+    front-page-search" data-block-type="33">
+      <div class="sqs-block-content">
+        <div class="sqs-search-ui-text-input sqs-search-ui-button-wrapper badger-glass" data-source="block" data-preview="true">
+          <div class="spinner-wrapper" hidden="hidden"></div>
+          <input
+            type="search"
+            class="search-input hover-effect"
+            value
+            aria-label="Search our Blog"
+            placeholder="Search our Blog"
+          >
+          <div class="yui3-widget sqs-widget sqs-search-preview">
+            <div class="sqs-search-preview-content"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <!-- Show active filters -->
+
+  {.section tagFilter}
+    <p class="filter-heading sansSerif fontS filter-by-tag loading" sqs-controller="FadeInContent">
+      All tagged <span class="category-name">{@}</span>
+    </p>
+  {.end}
+
+  {.if authorFilter}
+  <div class="filter-heading sansSerif fontS filter-by-author loading" sqs-controller="FadeInContent">
+    <p>All posts by {author.displayName}</p>
+    {.if author.avatarId}
+    <div class="author-avatar content-fill">
+      <img class="author-avatar-image" data-src="{author.avatarAssetUrl}" data-image="{author.avatarAssetUrl}" data-image-focal-point="0.5,0.5">
+    </div>
+    {.end}
+  </div>
+  <script>
+    ampTracking.author = "{author.displayName}";
+  </script>
+  {.end}
+  <div class="loading-spinner"></div>
+
+
+  <div class="blog-list blog-wrapper" id="blogList" sqs-controller="BlogGrid">
+  {.section collection.categories}
+    <ul class="category-list boldSansSerif {categoryFilter|slugify}">
+      <li>
+        <a class="all-items" href="/blog/">All</a>
+      </li>
+      {.repeated section @}
+        <li>
+          <a class="category-link {@|slugify}" href="/blog/?category={@|url-encode}">{@}</a>
+        </li>
+      {.end}
+    </ul>
+  <script>
+    if ("{categoryFilter}") ampTracking.filterCategory = "{categoryFilter}";
+    if ("{tagFilter}") ampTracking.filterTag = "{tagFilter}";
+  </script>
+  {.end}
+  {.repeated section items}
+    <article class="entry entry--list h-entry grid-hidden {.main-image?} has-main-image {.end}{@|item-classes}" id="article-{id}" label="Blog Post" data-item-id="{id}" data-offset="{addedOn}"{.if pagination.nextPage}{.or} data-last-page{.end}>
+
+    <div class="blog-header-excerpt">
+      <div class="entry-text">
+        <div class="entry-content">
+          <span class="blog-meta-item blog-meta-category">{categories}</span>
+
+          {.section author}<span class="blog-meta-item blog-meta-author"><a href="/blog{collection.fullUrl}?author={author.id}" class="blog-author-name">{displayName}</a> </span>{.end}
+
+          <time class="dt-published date-callout" datetime="{addedOn|date %F}" pubdate>
+            {addedOn|timesince}
+          </time>
+        </div>
+      </div>
+
+      <header class="entry-header">
+        <h2 class="entry-title entry-title--list p-name fontM2 boldSerif" itemprop="headline" data-content-field="title" >
+          {.passthrough?}
+            <a href="{sourceUrl}" class="entry-title-passthrough" target="_blank">
+            {.or}
+            <a href="{fullUrl}" class="u-url" rel="bookmark">
+            {.end}
+            {title}
+          </a>
+        </h2>
+      </header>
+
+      <div class="thumbnail-title-wrapper small-screen">
+        {.main-image?}
+        <div class="excerpt-thumb">
+          <a href="{fullUrl}" class="excerpt-image content-fill">
+            <img src="{assetUrl}?format=500w" alt="{title}" />
+          </a>
+        </div>
+        {.end}
+      </div>
+
+      <div class="entry-text">
+        <div class="entry-content">
+          {.excerpt?}
+            <div class="entry-excerpt serif p-summary">
+              {excerpt}
+            </div>
+          {.end}
+        </div>
+      </div>
+    </div>
+
+    <div class="thumbnail-title-wrapper medium-large-screen">
+      {.main-image?}
+        <div class="excerpt-thumb">
+          <a href="{fullUrl}" class="excerpt-image content-fill">
+            <img src="{assetUrl}?format=500w" alt="{title}" />
+          </a>
+        </div>
+      {.end}
+    </div>
+  </article>{.end}
+
+</div>
+{.if pagination}
+  <div class="pagination-buttons">
+    {.if pagination.prevPage}
+      <div class="load-more-wrapper">
+        <a class="prev-page boldSansSerif fontS" href="/blog/{pagination.prevPageUrl}">
+          Previous
+        </a>
+      </div>
+    {.end}
+    {.if pagination.nextPage}
+      <div class="load-more-wrapper">
+        <a class="load-more boldSansSerif fontS" href="/blog/{pagination.nextPageUrl}">
+          Next page
+        </a>
+      </div>
+    {.end}
+  </div>
+{.end}
+<div class="breaker"></div>
+
+<script>
+  var catLinks = document.querySelectorAll('.category-link');
+
+  if (ga) {
+    catLinks.forEach(function(node) {
+      node.addEventListener('click', function() {
+        ga('send', 'event', node.textContent + ' Category' , 'click', 'Blog Category');
+      });
+    });
+  };
+</script>

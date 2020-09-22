@@ -1,0 +1,24 @@
+{
+  "name": "rb-squarespace-blog-template",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "squarespace-server https://redbadger-blog.squarespace.com",
+    "help": "squarespace-server --help"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@squarespace/server": "^1.1.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/redbadger/blog-squarespace-template.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/redbadger/blog-squarespace-template/issues"
+  },
+  "homepage": "https://github.com/redbadger/blog-squarespace-template#readme"
+}
